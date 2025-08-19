@@ -20,7 +20,7 @@ pub mod rotofi {
     pub fn create_cycle(
         ctx: Context<CreateCycle>,
         args: CreateCycleArgs,
-        nonces: u8
+        nonces: u8,
     ) -> Result<()> {
         ctx.accounts.create_cycle(args, ctx.bumps, nonces)
     }
@@ -48,10 +48,5 @@ pub mod rotofi {
     // Claim collateral from a defaulted member
     pub fn claim_collateral(ctx: Context<ClaimCollateral>) -> Result<()> {
         ctx.accounts.claim_collateral()
-    }
-
-    // Close a cycle
-    pub fn close_cycle(ctx: Context<CloseCycle>) -> Result<()> {
-        ctx.accounts.close_cycle()
     }
 }

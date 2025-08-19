@@ -1,118 +1,72 @@
-# 💸 RotoFi – Smart Money Circles on Blockchain
+## 💸 RotoFi — Money Circles on Solana
 
-RotoFi is a decentralized ROSCA (Rotating Savings and Credit Association) platform that brings traditional money-saving circles onto the blockchain — making them **trustless**, **transparent**, and **fully programmable**.
+RotoFi turns old‑school saving circles into on‑chain rituals. A small crew chips in every round, and the pot rolls to the next person in line. No spreadsheets. No group chats. Just code.
 
-![Solana](https://img.shields.io/badge/Solana-Devnet-3ECF8E?logo=solana&logoColor=white)
+![Solana](https://img.shields.io/badge/Solana-Localnet-3ECF8E?logo=solana&logoColor=white)
 ![Anchor](https://img.shields.io/badge/Anchor-Framework-blueviolet)
 
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/cb4cd64d-1215-4cd6-b7ed-306457520472" alt="Banner" width="600"/>
-</div>
+---
+
+### The vibe
+
+- ✨ **Trustless**: Rules are code. Payouts are automatic.
+- ⏱️ **On time**: Each round has a deadline; no more chasing payments.
+- 🤝 **Fair**: Join order sets the payout order. Everyone gets a turn.
 
 ---
 
-## What’s the Idea?
+### 60‑second tour
 
-Imagine a group of friends or community members saving together. Each month, everyone contributes a fixed amount, and one member takes the full pot. This continues until all members have received it once.
-
-With **RotoFi**, this entire process is automated by smart contracts — no banks, no middlemen, and no need to trust anyone.
-
----
-
-## Key Features
-
-- **Circle Creation**  
-  Set group size, monthly contribution, payout rules (order/random/auction), and entry criteria.
-
-- **Trustless Participation**  
-  Members stake collateral, and smart contracts ensure timely payments and fair payouts.
-
-- **Flexible Payout Logic**  
-  Predefined, need-based, randomized, or auction-style distributions.
-
-- **Dispute Handling**  
-  Defaults are penalized via staked collateral. Members can vote on special cases.
-
-- **Security Measures**  
-  All funds are escrowed in the contract. Organizers can't claim the first payout.
+1) **Create** a circle with the amount, group size, and timing you want.
+2) **Join** to reserve your spot in the payout line.
+3) **Contribute** your share each round before the clock runs out.
+4) **Payout** hits the next person in line at the scheduled time.
+5) **Repeat** until everyone’s been paid.
+6) **Close** the circle and wrap things up.
 
 ---
 
-## Why Rotofi?
+### Flow postcard
 
-- Perfect for communities, families, and peer groups.
-- Encourages savings without relying on financial institutions.
-- Enforces rules through code — not trust.
-
----
-
-
----
-```scharp
+```bash
 Organizer
-   │
-   └──▶ create_cycle(target_participants, collateral, token_mint, ...)
-          │
-          ▼
-    [Cycle PDA account is initialized]
-          │
-          ▼
-    [Cycle token_account (ATA) is created]
-          │
-          ▼
-    [cycle.current_participants = 0]
-          │
-          ▼
-Participants start joining
-          │
-          └──▶ join_cycle()
-                   │
-                   ▼
-         [member_account created with is_active = true]
-                   │
-                   ▼
-         [collateral transferred to cycle_token_account]
-                   │
-                   ▼
-         [member added to payout_order]
-                   │
-                   ▼
-         [cycle.current_participants += 1]
-                   │
-                   ▼
-         ┌────────────── if ───────────────┐
-         │ cycle.current_participants ==   │
-         │        cycle.target_participants│
-         └─────────────────┬───────────────┘
-                           │
-                           ▼
-               [Cycle starts automatically]
-                           │
-                           ▼
-              [cycle.current_round = 1]
-                           │
-                           ▼
-           ┌─────────────────────────────────┐
-           │  For each round in the cycle:   │
-           └─────────────────────────────────┘
-                           │
-         ┌─────────────────┴──────────────────┐
-         ▼                                    ▼
-members submit_contribution()         (no more exits allowed)
-         │
-         ▼
-[Pot collected for the round]
-         │
-         ▼
-[payout_order[current_round - 1] gets the pot]
-         │
-         ▼
-[cycle.current_round += 1]
-         │
-   ┌─────┴────────────┐
-   ▼                  ▼
- more rounds        all rounds done
-    left              │
-    │                 ▼
-    └────────────▶ [Cycle closes]
+  └─> create_circle
+        ↓
+Members arrive
+  └─> join_cycle  (join order = payout order)
+        ↓
+Rounds roll
+  ├─> submit_contribution (everyone pays in)
+  └─> trigger_payout      (next in line gets the pot)
+        ↓
+All done
+  └─> close_cycle
 ```
+
+---
+
+### Why you’ll like it
+
+- 🎯 Simple: clear steps, clean flow
+- 🔍 Transparent: everything happens on-chain
+- ⚡ Fast & cheap: built on Solana with Anchor
+
+---
+
+### Try it in three commands
+
+```bash
+npm install
+anchor build
+anchor test
+```
+
+That’s it — the tests walk through the basic lifecycle.
+
+---
+
+### What is RotoFi, really?
+
+- A tiny, opinionated Solana program for running money circles without manual coordination.
+- A friendly template for experiments, demos, and community pilots.
+- A way to turn “see you next month” into “see you on-chain.”

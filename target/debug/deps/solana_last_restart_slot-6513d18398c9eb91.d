@@ -1,0 +1,8 @@
+/home/abduo/lol/RotoFi/target/debug/deps/solana_last_restart_slot-6513d18398c9eb91.d: /home/abduo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-last-restart-slot-2.2.1/src/lib.rs /home/abduo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-last-restart-slot-2.2.1/src/sysvar.rs
+
+/home/abduo/lol/RotoFi/target/debug/deps/libsolana_last_restart_slot-6513d18398c9eb91.rlib: /home/abduo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-last-restart-slot-2.2.1/src/lib.rs /home/abduo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-last-restart-slot-2.2.1/src/sysvar.rs
+
+/home/abduo/lol/RotoFi/target/debug/deps/libsolana_last_restart_slot-6513d18398c9eb91.rmeta: /home/abduo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-last-restart-slot-2.2.1/src/lib.rs /home/abduo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-last-restart-slot-2.2.1/src/sysvar.rs
+
+/home/abduo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-last-restart-slot-2.2.1/src/lib.rs:
+/home/abduo/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/solana-last-restart-slot-2.2.1/src/sysvar.rs:

@@ -1,9 +1,13 @@
+use crate::{
+    error::CustomError,
+    util::{calculate_organizer_stake, calculate_payout_amount, calculate_pot_amount},
+    CycleAccount, OrganizerAccount,
+};
 use anchor_lang::prelude::*;
 use anchor_spl::{
     associated_token::AssociatedToken,
     token::{Mint, Token, TokenAccount, Transfer},
 };
-use crate::{constants::USDT_MINT_ADRESS, error::CustomError, util::{calculate_organizer_stake, calculate_payout_amount, calculate_pot_amount}, CycleAccount, OrganizerAccount};
 
 #[derive(AnchorSerialize, AnchorDeserialize)]
 pub struct CreateCycleArgs {
@@ -54,9 +58,7 @@ pub struct CreateCycle<'info> {
     )]
     pub organizer_token_account: Account<'info, TokenAccount>,
 
-    #[account(
-        constraint = token_mint.key() == USDT_MINT_ADRESS @ CustomError::InvalidTokenMint
-    )]
+    #[account()]
     pub token_mint: Account<'info, Mint>,
 
     pub system_program: Program<'info, System>,
@@ -70,10 +72,13 @@ impl<'info> CreateCycle<'info> {
         &mut self,
         args: CreateCycleArgs,
         bumps: CreateCycleBumps,
-        nonces: u8
+        nonces: u8,
     ) -> Result<()> {
         require!(args.amount_per_user > 0, CustomError::InvalidAmountPerUser);
-        require!(args.contribution_interval > 0, CustomError::InvalidContributionInterval);
+        require!(
+            args.contribution_interval > 0,
+            CustomError::InvalidContributionInterval
+        );
         require!(args.round_count >= 1, CustomError::InvalidRoundCount);
         let clock = Clock::get()?;
 
@@ -100,10 +105,14 @@ impl<'info> CreateCycle<'info> {
         let created_at = clock.unix_timestamp;
 
         // Update organizer account
-        self.organizer_account.total_cycles = self.organizer_account.total_cycles
+        self.organizer_account.total_cycles = self
+            .organizer_account
+            .total_cycles
             .checked_add(1)
             .ok_or(CustomError::ArithmeticOverflow)?;
-        self.organizer_account.locked_stake = self.organizer_account.locked_stake
+        self.organizer_account.locked_stake = self
+            .organizer_account
+            .locked_stake
             .checked_add(required_organizer_stake)
             .ok_or(CustomError::ArithmeticOverflow)?;
         self.organizer_account.last_cycle_time = created_at;
@@ -145,4 +154,3 @@ impl<'info> CreateCycle<'info> {
         Ok(())
     }
 }
-
